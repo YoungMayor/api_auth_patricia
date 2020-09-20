@@ -41,10 +41,12 @@ return [
             'provider' => 'users',
         ],
 
+        /**
+         * The API Guard would be implemented using Tymon\JWTAuth
+         */
         'api' => [
-            'driver' => 'token',
+            'driver' => 'jwt',
             'provider' => 'users',
-            'hash' => false,
         ],
     ],
 

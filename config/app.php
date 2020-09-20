@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'API_AUTH'),
 
     /*
     |--------------------------------------------------------------------------
@@ -174,6 +174,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        /**
+         * 3rd Party Providers
+         */
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
     ],
 

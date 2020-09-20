@@ -13,7 +13,9 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
-        "laravel/tinker": "^2.0"
+        "laravel/tinker": "^2.0",
+        "laravel/ui": "^3.0",
+        "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -56,6 +58,13 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "run-test": [
+            "\"./vendor/bin/phpunit\""
+        ],
+        "run-test-refresh": [
+            "php artisan migrate:refresh",
+            "\"./vendor/bin/phpunit\""
         ]
     }
 }

@@ -1,61 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Authentication System in Laravel
+### SETUP
+Setup for the project is relatively according to standard. 
+1. Pull the project
+2. Install Dependencies (composer and npm)
+3. Configure database
+4. Generate encryption key
+5. Run migrations 
+6. Launch
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
 
-## About Laravel
+##### Pull the Project
+The Project is available on [github here](https://github.com/YoungMayor/api_auth_patricia.git).
+You an add it to your local machine either by git pull command 
+```cmd
+git clone https://github.com/YoungMayor/api_auth_patricia.git api_auth_patricia
+```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+##### Install Dependencies
+After the project has been pulled unto your local computer. You will need to install dependecies for the project. Start by changing your terminal directory to the directory where the project is located. 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This can be done on windows by running the below command
+```cmd
+cd api_auth_patricia
+```
+Then afterwards, you install the composer dependencies by running 
+```cmd 
+composer install
+npm install
+```
+NOTE: Please ensure that you have composer and npm installed on your machine.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+##### Configure Database
+Database configuration is relatively easy. 
+1. Create an empty database
+2. Configure your environment
+    ```cmd
+    cp .env.example .env
+    ```
+3. configure your environment variables to reflect your database and mail settings
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+##### Generate encryption key 
+Laravel requires you to have an app encryption key which is randomly generated and stored on your .env file. This can be created by running the below command on your terminal. 
+```cmd 
+php artisan key:generate
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+##### Run Migrations 
+Running migrations would create the database tables the project needs. 
+You can do this by running the below command on your terminal 
+```cmd 
+php artisan migrate
+```
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+##### Launch 
+Project setup has been completed and the project can now launch the project. 
+If you do not have a local server installed on your machine. You can run the below command to serve the project
+```cmd 
+php artisan serve
+```
+That serves the project for local testing and usage. 
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### HOW TO USE
+This can be served using any API Testing Environment. 
+PostMan has been used here, but you are free to use any
 
-## Code of Conduct
+#### Registration 
+To register an account, you are required to pass the following parameters via POST method to the `/api/register` endpoint. 
+1. email 
+2. password
+3. password_confirmation
+4. name
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Passing an invalid data would result in a 422 (unprocessable entity) error. 
+![Register Error 422 Screenshot](./screenshots/001-Register-Error-422.jpg)
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Passing valid data would return a 201 (created) HTTP Responsewith the user logged in and an authentication token generated for him as seen below
+![Register Success 201 Screenshot](./screenshots/002-Register-Success-201.jpg)
+
+- Attempting to register a user email that has already been registered would also return a 422 error 
+- ![Register Error 422 Screenshot](./screenshots/003-Register-Error-422.jpg)
+
+
+#### Login
+A user can be logged in by passing his email and password to the `/api/login/` endpoint via POST request
+
+- Passing invalid login credentials be it invalid email or invalid password would return a 401 (unauthenticated) error. 
+![Login Error 401 Screenshot](./screenshots/004-Login-Error-401.jpg)
+
+- Whereas, passing valid credentials would return 200 (ok) and the authentication token in the body of the response and also attached to the response.
+![Login Success Screenshot](./screenshots/005-Login-Success-200.jpg)
+![Login Success Screenshot](./screenshots/006-Login-Success-200.jpg)
+
+
+#### User Details 
+To get user details. You only need to send a GET request to the `/api/user` endpoint with the authentication token passed like `Authentication: Bearer ${token_here}`
+When the token is valid, a 200 (ok) response would be received from the endpoint
+![User Details Screenshot](./screenshots/007-User-Details-200.jpg)
+However if the token is not passed properly, then a 401 (unauthenticated) error is received
+![User Details Unauthenticated Screenshot](./screenshots/008-User-Unauthenticated-401.jpg)
+The same would be received if the token is invalid. i.e. it is expired or incorrect
+
+
+
+### TESTING
+System Testing has been integrated into composer and can be run by running the below command on your terminal. 
+```cmd
+composer run-test
+```
+That would run a PHPUnit test on your console.
+![Test Results](./screenshots/009-Testing.jpg). 
+Also included is an option to test with a refreshed database. 
+This can be done by running on your terminal
+```cmd 
+composer run-test-refresh
+```
+This would refresh your database then run the tests
+![Test Results](./screenshots/010-Testing.jpg). 

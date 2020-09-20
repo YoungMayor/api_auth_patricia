@@ -54,6 +54,13 @@ return [
             'days' => 14,
         ],
 
+        'logmail' => [
+            'driver' => 'daily',
+            'path' => storage_path("logs/mails/logmail_".time().".html"),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
